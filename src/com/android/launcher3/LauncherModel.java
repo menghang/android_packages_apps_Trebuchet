@@ -2758,6 +2758,10 @@ public class LauncherModel extends BroadcastReceiver
                     mHiddenAppsPackages.add(cmp.getPackageName());
                 }
             }
+                        
+            boolean showProtectedApp = SettingsProvider.getBoolean(mContext,
+                SettingsProvider.SETTINGS_UI_GENERAL_SHOW_PROTECTED_APPS,
+                R.bool.preferences_interface_show_protected_apps);
 
             // Shortcuts
             int N = workspaceItems.size() - 1;
@@ -2766,7 +2770,7 @@ public class LauncherModel extends BroadcastReceiver
                 if (item instanceof ShortcutInfo) {
                     ShortcutInfo shortcut = (ShortcutInfo)item;
                     if (shortcut.intent != null && shortcut.intent.getComponent() != null) {
-                        if (mHiddenApps.contains(shortcut.intent.getComponent())) {
+                        if (mHiddenApps.contains(shortcut.intent.getComponent()) && !showProtectedApp) {
                             LauncherModel.deleteItemFromDatabase(mContext, shortcut);
                             workspaceItems.remove(i);
                         }
@@ -2781,7 +2785,7 @@ public class LauncherModel extends BroadcastReceiver
                         final ShortcutInfo sci = shortcuts.get(j);
                         if (sci.intent != null && sci.intent.getComponent() != null) {
                             if (!folder.hidden){
-                                if (mHiddenApps.contains(sci.intent.getComponent())) {
+                                if (mHiddenApps.contains(sci.intent.getComponent()) && !showProtectedApp) {
                                     LauncherModel.deleteItemFromDatabase(mContext, sci);
                                     Runnable r = new Runnable() {
                                         public void run() {

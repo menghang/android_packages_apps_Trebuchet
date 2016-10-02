@@ -43,10 +43,12 @@ public class OverviewSettingsPanel {
         if( mLauncher.getIsHiddenMenuOptionEnabled() == false ) {
             valuesApp = new String[] {
                 res.getString(R.string.larger_icons_text),
+                res.getString(R.string.show_protected_apps),
                 res.getString(R.string.protected_app_settings)};
         } else {
             valuesApp = new String[] {
                 res.getString(R.string.larger_icons_text),
+                res.getString(R.string.show_protected_apps),
                 res.getString(R.string.protected_app_settings),
                 res.getString(R.string.export_workspace_layout)};
         }

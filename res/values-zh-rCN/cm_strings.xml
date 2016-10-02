@@ -47,6 +47,7 @@
   <string name="icon_labels_hide">隐藏</string>
   <!-- Protected apps -->
   <string name="protected_app_settings">受保护的应用</string>
+  <string name="show_protected_apps">不隐藏受保护的应用</string>
   <!-- Developer settings -->
   <string name="export_workspace_layout">导出布局</string>
   <!-- Drawer settings -->

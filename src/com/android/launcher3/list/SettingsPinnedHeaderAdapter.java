@@ -199,6 +199,12 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                                 R.bool.preferences_interface_general_icons_large_default);
                         setSettingSwitch(stateView, settingSwitch, current);
                         break;
+                    case 1:
+                        current = SettingsProvider.getBoolean(mContext,
+                                SettingsProvider.SETTINGS_UI_GENERAL_SHOW_PROTECTED_APPS,
+                                R.bool.preferences_interface_show_protected_apps);
+                        setSettingSwitch(stateView, settingSwitch, current);
+                        break;
                     default:
                         hideStates(stateView, settingSwitch);
                 }
@@ -368,12 +374,18 @@ public class SettingsPinnedHeaderAdapter extends PinnedHeaderListAdapter {
                             mLauncher.reloadLauncher(true, true);
                             break;
                         case 1:
+                            onSettingsBooleanChanged(v,
+                                    SettingsProvider.SETTINGS_UI_GENERAL_SHOW_PROTECTED_APPS,
+                                    R.bool.preferences_interface_show_protected_apps, false);
+                            mLauncher.reloadLauncher(true, true);
+                            break;
+                        case 2:
                             Intent intent = new Intent();
                             intent.setClassName(OverviewSettingsPanel.ANDROID_SETTINGS,
                                     OverviewSettingsPanel.ANDROID_PROTECTED_APPS);
                             mLauncher.startActivity(intent);
                             break;
-                        case 2:
+                        case 3:
                             mLauncher.checkPermissionsAndExportDBFile();
                             mLauncher.emailExportedFile();
                             break;

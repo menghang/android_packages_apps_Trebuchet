@@ -14,10 +14,12 @@ import com.android.launcher3.ItemInfo;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherAppWidgetProviderInfo;
 import com.android.launcher3.ProtectedComponentsHelper;
+import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.compat.AlphabeticIndexCompat;
 import com.android.launcher3.compat.AppWidgetManagerCompat;
 import com.android.launcher3.compat.UserHandleCompat;
+import com.android.launcher3.settings.SettingsProvider;
 import cyanogenmod.providers.CMSettings;
 
 import java.util.ArrayList;
@@ -160,18 +162,22 @@ public class WidgetsModel {
                 }
                 continue;
             }
+        
+            boolean showProtectedApp = SettingsProvider.getBoolean(mContext,
+                SettingsProvider.SETTINGS_UI_GENERAL_SHOW_PROTECTED_APPS,
+                R.bool.preferences_interface_show_protected_apps);
 
             PackageItemInfo pInfo = tmpPackageItemInfos.get(packageName);
             ArrayList<Object> widgetsShortcutsList = mWidgetsList.get(pInfo);
             if (widgetsShortcutsList != null) {
                 if (pInfo != null && ProtectedComponentsHelper.isProtectedPackage(pInfo.flags,
-                        packageName)) {
+                        packageName) && !showProtectedApp) {
                     continue;
                 }
                 widgetsShortcutsList.add(o);
             } else {
                 pInfo = new PackageItemInfo(packageName);
-                if (ProtectedComponentsHelper.isProtectedPackage(pInfo.flags, packageName)) {
+                if (ProtectedComponentsHelper.isProtectedPackage(pInfo.flags, packageName) && !showProtectedApp) {
                     continue;
                 }
                 widgetsShortcutsList = new ArrayList<>();

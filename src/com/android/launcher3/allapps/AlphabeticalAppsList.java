@@ -22,9 +22,11 @@ import com.android.launcher3.AppInfo;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.ProtectedComponentsHelper;
+import com.android.launcher3.R;
 import com.android.launcher3.compat.AlphabeticIndexCompat;
 import com.android.launcher3.compat.UserHandleCompat;
 import com.android.launcher3.model.AppNameComparator;
+import com.android.launcher3.settings.SettingsProvider;
 import com.android.launcher3.util.ComponentKey;
 import cyanogenmod.providers.CMSettings;
 
@@ -518,11 +520,15 @@ public class AlphabeticalAppsList {
         }
 
         ProtectedComponentsHelper.updateProtectedComponentsLists(mLauncher);
+        
+        boolean showProtectedApp = SettingsProvider.getBoolean(mLauncher,
+                SettingsProvider.SETTINGS_UI_GENERAL_SHOW_PROTECTED_APPS,
+                R.bool.preferences_interface_show_protected_apps);
 
         // Recreate the filtered and sectioned apps (for convenience for the grid layout) from the
         // ordered set of sections
         for (AppInfo info : getFiltersAppInfos()) {
-            if (ProtectedComponentsHelper.isProtectedApp(info.flags, info.componentName)) {
+            if (ProtectedComponentsHelper.isProtectedApp(info.flags, info.componentName) && !showProtectedApp) {
                 continue;
             }
 

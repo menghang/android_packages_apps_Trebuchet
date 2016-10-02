@@ -59,6 +59,7 @@
 
     <!-- Protected apps -->
     <string name="protected_app_settings">Protected apps</string>
+    <string name="show_protected_apps">Show protected apps</string>
 
     <!-- Developer settings -->
     <string name="export_workspace_layout">Export layout</string>
